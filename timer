@@ -1,0 +1,35 @@
+from tkinter import*
+from time import*
+date = "09:35:20"
+h = int(date[0:2])
+m = int(date[3:5])
+s = int(date[6:9])
+
+
+def update(x,y,z):
+    a=x
+    b=y
+    c=z
+    if a >= 60:
+            a = a%60
+            b = b + 1
+    if b >= 60:
+            b = b%60
+            c = c + 1
+    if c >= 24:
+            c = 0
+    date2 = str(c)+":"+str(b)+":"+str(a)
+    a = a + 1
+    label.config(text=date2)
+    label.after(1000, lambda: update(a,b,c))
+
+
+window=Tk()
+window.geometry("400x400")
+window.title("Timer")
+label = Label(window)
+
+update(x=s,y=m,z=h)
+label.pack()
+
+window.mainloop()
