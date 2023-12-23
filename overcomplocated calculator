@@ -1,0 +1,42 @@
+#this code is only made so that I can understand better how to use functions
+def div(x,y):
+    y2 = y
+    stt = True
+    res = 0
+    while stt == True:
+        q = x - y 
+        res += 1
+        if q < y2 :
+            stt = False
+        else:
+            y += y2
+    return res
+
+def mod(x,y):
+    y2 = y
+    stt = True
+    while stt == True:
+        q = x - y
+        if q < y2 :
+            res = q
+            stt = False
+        else:
+            y += y2
+    return res
+
+def add(x,y):
+    return x+y
+
+def sub(x,y):
+    return x - y
+
+num1 = int(input('number: '))
+num2 = int(input('affecter: '))
+op = input('operation: ')
+
+match op:
+    case "div" : print(div(num1,num2)) 
+    case "mod" : print(mod(num1,num2))
+    case "add" : print(add(num1,num2))
+    case "sub" : print(sub(num1,num2))
+    case _ : print("error")
