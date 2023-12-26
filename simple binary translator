@@ -1,0 +1,126 @@
+from tkinter import*
+win = Tk()
+
+def main_function():
+    global ch
+    numbers = [
+        "0000",
+        "0001",
+        "0010",
+        "0011",
+        "0100",
+        "0101",
+        "0110",
+        "0111",
+        "1000",
+        "1001",
+        ] # numbers 0 to 9
+            # after checking some things, turns out there are 2 way to display numbers in binary?
+            #its either this, or adding "0011" at the start, odd, but can easily be changed later
+
+    repeating_part = (
+        "000",
+        "001",
+        "010",
+        "011",
+        "100",
+        "101",
+        "110",
+        "111",
+        )  #repeating part of the binary
+
+    first_part = (
+        "01000",
+        "01001",
+        "01010",
+        "01011",
+        
+        "01100",
+        "01101",
+        "01110",
+        "01111",
+        ) #first part of it
+
+
+    merged = []
+    for i in range(len(first_part)):
+        current = first_part[i]
+        for u in range(len(repeating_part)):
+             merged.append(current + repeating_part[u]) #this takes 1 object from the first part and forms combinations with it using repeating part
+    merged=merged[1:27]+merged[33:59]+numbers  #removing extra parts
+
+
+    ch = ""
+    ltr = 64
+    for i in range(26):
+        ltr += 1
+        ch += chr(ltr)
+    ch += (ch.lower() + "0123456789") #creating a string that contains all characters
+    
+    
+    dictionary = {
+        }
+    for i in range(len(ch)):
+        dictionary[ch[i]] = merged[i]
+    dictionary[" "] = "00100000"
+    return dictionary
+
+
+def text_handler(X): #this turns text into binary
+    D = main_function()
+    result = ""
+    for i in range(len(X)):
+        if X[i] in D :
+            result += (D[X[i]] + " ")
+        else:
+            pass
+    return result
+
+def binary_handler(X): #the opposite of text handler
+    D = main_function()
+    D_rev = {}
+    result = ""
+    splits = X.split()
+    for i in range(len(D)-1):
+        D_rev[D[ch[i]]] = ch[i]
+    D_rev["00100000"] = " "
+    for i in range(len(splits)):
+        if splits[i] in D_rev :
+            result += D_rev[splits[i]]
+        else:
+            pass
+    return result
+def ToB(): # displays binary in box
+    TXT = textbox.get()
+    BIN = text_handler(TXT)
+    resultbox.delete(0, "end")
+    resultbox.insert(0, BIN)
+def ToT(): # displays text in box
+    BIN = textbox.get()
+    TXT = binary_handler(BIN)
+    resultbox.delete(0, "end")
+    resultbox.insert(0, TXT)
+
+# upcoming is the blob of text that makes tkinter work
+win.geometry("1150x500")
+textbox = Entry()
+resultbox = Entry()
+resultbox.config(width=80)
+textbox.config(font=('Times', 30))
+resultbox.config(font=('Times', 20))
+Tbutton= Button(win,text='To binary', command=ToB )
+Bbutton= Button(win,text='To text', command=ToT )
+b = """
+*place your text in the upper box and select the operation
+*it is recommended to copy and paste the result due to display issues
+*symbols are unsupported, and will be ignored
+"""
+L = Label(win, text=b)
+textbox.pack()
+Tbutton.pack()
+Bbutton.pack()
+resultbox.pack()
+L.pack()
+
+win.mainloop()
+# yippeeee!!
